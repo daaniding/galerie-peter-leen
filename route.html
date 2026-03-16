@@ -1,0 +1,363 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route &amp; Contact | SameSame</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --deep-red: #8B1A1A; --dark-red: #6B0F0F; --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --cream-dark: #F5E6CC; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); transition: padding 0.4s; }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s ease; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); transition: all 0.3s ease; }
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--cream); margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.1) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; position: relative; }
+        .page-header > .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; position: relative; }
+        .btn { display: inline-block; padding: 0.9rem 2.2rem; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.3s ease; cursor: pointer; border: none; }
+        .btn-primary { background: var(--gold); color: var(--black); }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,168,67,0.3); }
+        .btn-outline { border: 1.5px solid var(--gold); color: var(--gold); background: transparent; }
+        .btn-outline:hover { background: var(--gold); color: var(--black); transform: translateY(-2px); }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,168,67,0.1); border-radius: 4px; padding: 2rem 1.8rem; transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0; transition: opacity 0.4s ease; }
+        .card:hover { border-color: rgba(212,168,67,0.3); transform: translateY(-3px); }
+        .card:hover::before { opacity: 1; }
+        .card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--cream); margin-bottom: 0.8rem; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; }
+        .card .card-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+        .info-block h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--cream); margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(212,168,67,0.2); }
+        .info-block p, .info-block li { color: var(--text-muted); font-size: 0.9rem; line-height: 1.8; }
+        .info-block ul { list-style: none; }
+        .info-block li { display: flex; justify-content: space-between; padding: 0.3rem 0; }
+        .info-block li .day { color: var(--cream); font-weight: 500; }
+        .info-block a { color: var(--gold); text-decoration: none; transition: color 0.3s; }
+        .info-block a:hover { color: var(--gold-light); }
+        .tag { display: inline-block; padding: 0.35rem 0.85rem; background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.2); border-radius: 20px; font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
+        .gallery-item { overflow: hidden; border-radius: 4px; position: relative; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; min-height: 220px; }
+        .gallery-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(13,13,13,0.65) 100%); opacity: 0; transition: opacity 0.4s ease; }
+        .gallery-item:hover img { transform: scale(1.06); }
+        .gallery-item:hover::after { opacity: 1; }
+        .gallery-caption { position: absolute; bottom: 1rem; left: 1rem; z-index: 2; font-size: 0.8rem; color: var(--cream); font-weight: 500; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; }
+        .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; padding-bottom: 2.5rem; } }
+
+        /* Page-specific styles */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        @media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; } }
+        .contact-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(212,168,67,0.07);
+        }
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row .ci { font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+        .contact-row .cl { display: flex; flex-direction: column; gap: 0.15rem; }
+        .contact-row .cl span { font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; }
+        .contact-row .cl a, .contact-row .cl p { color: var(--text-light); font-size: 0.9rem; text-decoration: none; transition: color 0.3s; }
+        .contact-row .cl a:hover { color: var(--gold); }
+        .route-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        @media (max-width: 750px) { .route-grid { grid-template-columns: 1fr; } }
+        .parking-banner {
+            background: rgba(212,168,67,0.05);
+            border: 1px solid rgba(212,168,67,0.2);
+            border-radius: 4px;
+            padding: 1.8rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .parking-banner .pb-icon { font-size: 2rem; flex-shrink: 0; }
+        .parking-banner strong { color: var(--cream); font-size: 1rem; display: block; margin-bottom: 0.3rem; }
+        .parking-banner p { color: var(--text-muted); font-size: 0.88rem; }
+        .map-embed {
+            width: 100%;
+            height: 380px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(212,168,67,0.12);
+            margin-bottom: 4rem;
+        }
+        .map-embed iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#menu">Restaurant &#9662;</a>
+                    <ul class="dropdown">
+                        <li><a href="samesame.html#menu">Menu</a></li>
+                        <li><a href="reserveren.html">Reserveren</a></li>
+                        <li><a href="arrangementen.html">Arrangementen</a></li>
+                        <li><a href="cadeaubon.html">Cadeaubon</a></li>
+                        <li><a href="vacatures.html">Vacatures</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown"><a href="samesame.html#kunstgalerij">Galerie &#9662;</a>
+                    <ul class="dropdown">
+                        <li><a href="samesame.html#kunstgalerij">Kunstenaars</a></li>
+                        <li><a href="kunst-thailand.html">Kunst uit Thailand</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a>
+                    <ul class="dropdown">
+                        <li><a href="meck.html">MECK</a></li>
+                        <li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li>
+                    </ul>
+                </li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a>
+                    <ul class="dropdown">
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="fotos.html">Foto's</a></li>
+                        <li><a href="binnenkijken.html">Binnenkijken</a></li>
+                        <li><a href="ons-thailand.html">Ons Thailand</a></li>
+                    </ul>
+                </li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
+        <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
+        <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
+        <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
+        <a href="samesame.html#kunstgalerij" onclick="toggleMobileMenu()">Galerie</a>
+        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
+        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
+        <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Favoriete Restaurants</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">Bezoek ons</span>
+        <h1>Route &amp; Contact</h1>
+        <p class="desc">Gemakkelijk bereikbaar vanuit Amsterdam en Utrecht via de A2.</p>
+    </div>
+
+    <section style="background: var(--dark-bg);">
+        <div class="section-inner">
+
+            <!-- Contact + Hours 2-column -->
+            <div class="contact-grid">
+
+                <!-- Left: Address & Contact -->
+                <div class="info-block card fade-in">
+                    <h3>Adres &amp; Contact</h3>
+                    <div class="contact-row">
+                        <span class="ci">📍</span>
+                        <div class="cl">
+                            <span>Adres</span>
+                            <a href="https://maps.google.com/?q=Herenstraat+25,+3621+AP+Breukelen" target="_blank" rel="noopener">Herenstraat 25, 3621 AP Breukelen</a>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ci">📞</span>
+                        <div class="cl">
+                            <span>Restaurant</span>
+                            <a href="tel:0346251216">0346 25 12 16</a>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ci">📱</span>
+                        <div class="cl">
+                            <span>Galerie</span>
+                            <a href="tel:0651707729">06 517 077 29</a>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ci">✉️</span>
+                        <div class="cl">
+                            <span>E-mail</span>
+                            <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ci">📘</span>
+                        <div class="cl">
+                            <span>Facebook</span>
+                            <a href="https://www.facebook.com/SameSameRestaurant/" target="_blank" rel="noopener">SameSame Restaurant</a>
+                        </div>
+                    </div>
+                    <div class="contact-row">
+                        <span class="ci">📸</span>
+                        <div class="cl">
+                            <span>Instagram</span>
+                            <a href="https://www.instagram.com/galeriepeterleen/" target="_blank" rel="noopener">@galeriepeterleen</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Opening hours -->
+                <div class="info-block card fade-in">
+                    <h3>Openingstijden</h3>
+                    <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; color:var(--gold); margin-bottom:0.8rem;">Restaurant</p>
+                    <ul>
+                        <li><span class="day">Woensdag</span><span>16:00 23:00</span></li>
+                        <li><span class="day">Donderdag</span><span>16:00 23:00</span></li>
+                        <li><span class="day">Vrijdag</span><span>12:30 23:00</span></li>
+                        <li><span class="day">Zaterdag</span><span>12:30 23:00</span></li>
+                        <li><span class="day">Zondag</span><span>12:30 23:00</span></li>
+                        <li><span class="day">Maandag</span><span>Gesloten</span></li>
+                        <li><span class="day">Dinsdag</span><span>Gesloten</span></li>
+                    </ul>
+                    <p style="font-size:0.75rem; text-transform:uppercase; letter-spacing:2px; color:var(--gold); margin: 1.2rem 0 0.8rem;">Galerie</p>
+                    <ul>
+                        <li><span class="day">Woensdag Zondag</span><span>Tijdens openingstijden</span></li>
+                        <li><span class="day">Op afspraak</span><span>06 517 077 29</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Map -->
+            <div class="map-embed fade-in">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2455.0!2d4.9994!3d52.1657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c64f2e3c5c5555%3A0x0!2sHerenstraat+25%2C+3621+AP+Breukelen!5e0!3m2!1snl!2snl!4v1234567890"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="SameSame locatie op Google Maps">
+                </iframe>
+            </div>
+
+            <!-- Route Description -->
+            <div class="section-header fade-in">
+                <span class="label">Routebeschrijving</span>
+                <h2>Hoe kom je bij ons?</h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="route-grid">
+                <div class="card fade-in">
+                    <div class="card-icon">🛣️</div>
+                    <h3>Via de A2</h3>
+                    <p>Neem afrit Breukelen. Sla vanaf de brug over het Amsterdam-Rijnkanaal links af bij de rotonde op de Straatweg. Steek de brug over en neem de tweede afslag rechts, de Hazenslinger. Volg de bocht naar links voor ongeveer 150 meter. De galerie bevindt zich aan de linkerkant. Gratis parkeren voor de deur.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">🏙️</div>
+                    <h3>Vanuit Amsterdam</h3>
+                    <p>Neem de A2 richting Utrecht. Na circa 20 minuten rijden neemt u afrit 7 Breukelen. Volg de routebeschrijving via de Straatweg naar de Hazenslinger. Reken op ongeveer 20 tot 25 minuten reistijd vanuit de ring Amsterdam.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="card-icon">🏛️</div>
+                    <h3>Vanuit Utrecht</h3>
+                    <p>Neem de A2 richting Amsterdam. Na circa 20 minuten neemt u afrit 7 Breukelen. Volg de routebeschrijving via de Straatweg naar de Hazenslinger. Reken op ongeveer 20 tot 25 minuten reistijd vanuit het centrum van Utrecht.</p>
+                </div>
+            </div>
+
+            <!-- Parking info -->
+            <div class="parking-banner fade-in">
+                <span class="pb-icon">🅿️</span>
+                <div>
+                    <strong>Gratis parkeren voor de deur</strong>
+                    <p>Er is voldoende gratis parkeergelegenheid direct voor Herenstraat 25. Geen parkeervergunning vereist. Fietsen kunnen worden gestald naast het gebouw.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame Logo" class="footer-logo">
+            <div class="footer-links">
+                <a href="reserveren.html">Reserveren</a>
+                <a href="route.html">Route</a>
+                <a href="cadeaubon.html">Cadeaubon</a>
+                <a href="vacatures.html">Vacatures</a>
+                <a href="kunst-thailand.html">Kunst uit Thailand</a>
+                <a href="arrangementen.html">Arrangementen</a>
+                <a href="meck.html">MECK</a>
+                <a href="blog.html">Blog</a>
+                <a href="fotos.html">Foto's</a>
+                <a href="binnenkijken.html">Binnenkijken</a>
+                <a href="ons-thailand.html">Ons Thailand</a>
+                <a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+            </div>
+            <p>SameSame Thai Restaurant &amp; Galerie Peter Leen XL &bull; Herenstraat 25, 3621 AP Breukelen</p>
+            <p style="margin-top:0.4rem;"><a href="tel:0346251216">0346 25 12 16</a> &bull; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+            <p style="margin-top:0.5rem; opacity:0.5;">Een synergie van hedendaagse kunst, muziek en heerlijk Thais eten.</p>
+        </div>
+    </footer>
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

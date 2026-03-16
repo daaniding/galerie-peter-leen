@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favoriete Restaurants | SameSame Thai Restaurant & Galerie Peter Leen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); }
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.1) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; }
+        .page-header .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--cream); margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        /* Intro note */
+        .intro-note { background: rgba(212,168,67,0.04); border-left: 3px solid var(--gold); padding: 1.5rem 2rem; border-radius: 0 4px 4px 0; margin-bottom: 4rem; }
+        .intro-note p { color: var(--text-muted); font-style: italic; font-size: 0.95rem; line-height: 1.7; }
+        .intro-note strong { color: var(--cream); }
+        /* Restaurant cards */
+        .resto-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .resto-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,168,67,0.1); border-radius: 4px; overflow: hidden; transition: all 0.4s; }
+        .resto-card:hover { border-color: rgba(212,168,67,0.3); transform: translateY(-3px); }
+        .resto-card-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+        .resto-card-body { padding: 1.8rem; }
+        .resto-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .resto-type { font-size: 0.7rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); background: rgba(212,168,67,0.08); border: 1px solid rgba(212,168,67,0.15); padding: 0.2rem 0.7rem; border-radius: 2px; }
+        .resto-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; }
+        .resto-card h3 { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--cream); margin-bottom: 0.4rem; }
+        .resto-location { font-size: 0.78rem; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.8rem; }
+        .resto-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.7; }
+        .resto-tip { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(212,168,67,0.08); font-size: 0.82rem; color: var(--text-muted); }
+        .resto-tip strong { color: var(--gold); }
+        /* Thailand section */
+        .thailand-section { background: linear-gradient(180deg, #111 0%, var(--dark-bg) 100%); }
+        .thailand-intro { text-align: center; margin-bottom: 3.5rem; }
+        .thailand-intro p { color: var(--text-muted); max-width: 640px; margin: 1rem auto 0; font-size: 0.97rem; line-height: 1.8; }
+        .thai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .thai-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(212,168,67,0.08); border-radius: 4px; padding: 1.8rem; }
+        .thai-card .place-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--cream); margin-bottom: 0.3rem; }
+        .thai-card .place-city { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+        .thai-card p { color: var(--text-muted); font-size: 0.87rem; line-height: 1.7; }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } .resto-grid { grid-template-columns: 1fr; } .thai-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; } .thai-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#menu">Restaurant &#9662;</a><ul class="dropdown"><li><a href="samesame.html#menu">Menu</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#kunstgalerij">Galerie &#9662;</a><ul class="dropdown"><li><a href="samesame.html#kunstgalerij">Kunstenaars</a></li><li><a href="kunst-thailand.html">Kunst uit Thailand</a></li></ul></li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li></ul></li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
+        <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
+        <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
+        <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
+        <a href="samesame.html#kunstgalerij" onclick="toggleMobileMenu()">Galerie</a>
+        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
+        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
+        <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Favoriete Restaurants</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">Tips van Peter &amp; Teem</span>
+        <h1>Favoriete Restaurants</h1>
+        <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+        <p class="desc">De plekken die wij zelf graag opzoeken in de regio, in Nederland en in Thailand.</p>
+    </div>
+
+    <section>
+        <div class="section-inner">
+
+            <div class="intro-note fade-in">
+                <p><strong>Een persoonlijke selectie.</strong> Wij geloven in het delen van goede plekken. Dit zijn restaurants en eetgelegenheden die wij zelf regelmatig bezoeken en van harte aanbevelen variërend van onze directe buren langs de Vecht tot verborgen pareltjes in Amsterdam en onze favoriete eetstraten in Chiang Mai en Bangkok.</p>
+            </div>
+
+            <div class="section-header fade-in">
+                <span class="label">In de Regio</span>
+                <h2>Aan de Vecht &amp; Omgeving</h2>
+                <div class="divider"></div>
+                <p>Loenen aan de Vecht ligt in een van de mooiste restaurantgebieden van Nederland.</p>
+            </div>
+
+            <div class="resto-grid">
+                <div class="resto-card fade-in">
+                    <img src="https://www.galeriepeterleen.nl/2023-XLoktII-web_001.jpeg" alt="Restaurant aan de Vecht" class="resto-card-img" onerror="this.style.background='#111';this.removeAttribute('src')">
+                    <div class="resto-card-body">
+                        <div class="resto-meta">
+                            <span class="resto-type">Frans</span>
+                            <span class="resto-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <h3>De Nederlanden</h3>
+                        <div class="resto-location">Vreeland, 5 km</div>
+                        <p>Een van de mooiste restaurantterassen aan de Vecht. De kaart is Frans ge&iuml;nspireerd met lokale producten. Uitstekende wijnkaart en een sfeer die doet denken aan de meest elegante bistrots van Parijs.</p>
+                        <div class="resto-tip"><strong>Tip van Peter:</strong> Reserveer op tijd voor het terras in de zomer dit is een van de populairste buitenterrassen van het Vechtdal.</div>
+                    </div>
+                </div>
+
+                <div class="resto-card fade-in">
+                    <img src="https://www.galeriepeterleen.nl/2022juni-Speciaalgedektvoorpartij_000.jpeg" alt="Restaurant" class="resto-card-img" onerror="this.style.background='#111';this.removeAttribute('src')">
+                    <div class="resto-card-body">
+                        <div class="resto-meta">
+                            <span class="resto-type">Nederlands</span>
+                            <span class="resto-stars">&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <h3>'t Jagershuis</h3>
+                        <div class="resto-location">Amstelhoek, 8 km</div>
+                        <p>Een klassiek Nederlands restaurantpand met een warme, huiselijke sfeer. Eerlijk koken met producten uit de directe omgeving. De visgerechten zijn een specialiteit vers van de markt in Volendam.</p>
+                        <div class="resto-tip"><strong>Tip van Teem:</strong> Ga op een doordeweekse avond dan is de sfeer intiem en rustig en krijg je alle aandacht van het team.</div>
+                    </div>
+                </div>
+
+                <div class="resto-card fade-in">
+                    <img src="https://www.galeriepeterleen.nl/Peataanhetwerk-juni2018-uitsnede_002.jpeg" alt="Breukelen" class="resto-card-img" onerror="this.style.background='#111';this.removeAttribute('src')">
+                    <div class="resto-card-body">
+                        <div class="resto-meta">
+                            <span class="resto-type">Italiaans</span>
+                            <span class="resto-stars">&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <h3>La Pecora Nera</h3>
+                        <div class="resto-location">Breukelen, 6 km</div>
+                        <p>Authentiek Italiaans restaurant door een Siciliaanse familie gerund. De pasta wordt dagelijks vers gemaakt. Ga voor de tagliata of de risotto met truffel. De espresso na het diner is onverslaanbaar.</p>
+                        <div class="resto-tip"><strong>Tip van Peter:</strong> De eigenaar verkoopt ook zijn zelfgemaakte Limoncello. Breng een lege fles mee!</div>
+                    </div>
+                </div>
+
+                <div class="resto-card fade-in">
+                    <img src="https://www.galeriepeterleen.nl/images/KleinegerechtenII-okt2024_000.jpg" alt="Amsterdam" class="resto-card-img" onerror="this.style.background='#111';this.removeAttribute('src')">
+                    <div class="resto-card-body">
+                        <div class="resto-meta">
+                            <span class="resto-type">Thai</span>
+                            <span class="resto-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                        </div>
+                        <h3>Long Pak</h3>
+                        <div class="resto-location">Amsterdam, 30 km</div>
+                        <p>Het beste Thaise restaurant van Amsterdam is niet het grootste of het hipste het is dit kleine familierestaurant in de Jordaan. De eigenares kookt zelf en de smaakbalans is impeccabel. Onze referentie voor Thai buiten onze eigen keuken.</p>
+                        <div class="resto-tip"><strong>Tip van Teem:</strong> Bestel de Tom Kha Gai hun kokosmelk-kippensoep is de beste die ik buiten Thailand heb gegeten.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="thailand-section">
+        <div class="section-inner">
+            <div class="thailand-intro fade-in">
+                <span style="font-size:0.75rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">In Thailand</span>
+                <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--cream);margin:1rem 0;">Onze favorieten in Thailand</h2>
+                <div style="width:60px;height:2px;background:var(--gold);margin:0 auto 1.5rem;"></div>
+                <p>Als we in Thailand zijn, kennen we de weg. Dit zijn de plekken die we jaar na jaar terugkeren van straatkramen tot bijzondere restaurants.</p>
+            </div>
+
+            <div class="thai-grid">
+                <div class="thai-card fade-in">
+                    <div class="place-name">Khao Soi Khun Yai</div>
+                    <div class="place-city">Chiang Mai</div>
+                    <p>De beste Khao Soi van Chiang Mai. Een simpele kraam op de ochtendmarkt. De currynoedels met knapperig gefrituurde noedels erop zijn het eerste wat we eten als we in het noorden aankomen.</p>
+                </div>
+
+                <div class="thai-card fade-in">
+                    <div class="place-name">Huen Phen</div>
+                    <div class="place-city">Chiang Mai</div>
+                    <p>Een legendarisch restaurant midden in de oude stad. Noord-Thaise specialiteiten in een prachtig houten huis vol antiek. 's Avonds alleen op reservering. Het Kaeng Hang Le (Burmaankari met varkensvlees) is onvergetelijk.</p>
+                </div>
+
+                <div class="thai-card fade-in">
+                    <div class="place-name">Bo.lan</div>
+                    <div class="place-city">Bangkok</div>
+                    <p>Misschien wel het beste fine dining restaurant van Thailand. Chef Bo en Dylan runnen een duurzame keuken gebaseerd op de vergeten koninklijke Thaise receptuur. Reserveer maanden van tevoren.</p>
+                </div>
+
+                <div class="thai-card fade-in">
+                    <div class="place-name">Thip Samai</div>
+                    <div class="place-city">Bangkok, Chinatown</div>
+                    <p>Dé Pad Thai van Bangkok. Al meer dan 60 jaar op dezelfde plek aan de Mahachai Road. De geheime mix van garnalen, tahoe, bieslook en tamarinde in een dunne omelet gewikkeld. Wachtrij van een uur het waard.</p>
+                </div>
+
+                <div class="thai-card fade-in">
+                    <div class="place-name">Markt Warorot</div>
+                    <div class="place-city">Chiang Mai</div>
+                    <p>De grote overdekte markt van Chiang Mai. Niet per se een restaurant, maar het mooiste plek om te eten als een local: van kraampje naar kraampje, mango sticky rice, gegrilde satés, papaya salade. Ochtend is het beste moment.</p>
+                </div>
+
+                <div class="thai-card fade-in">
+                    <div class="place-name">Khua Kling Pak Sod</div>
+                    <div class="place-city">Bangkok, Silom</div>
+                    <p>Zuid-Thaise keuken op zijn best: pittig, geurig en complex. De krab met gele curry is een van de meest bijzondere gerechten die we in Thailand hebben gegeten. Niets voor de onervaren eter dit is echte Thaise hitte.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="footer-logo">
+            <div class="footer-links">
+                <a href="samesame.html">Home</a>
+                <a href="reserveren.html">Reserveren</a>
+                <a href="arrangementen.html">Arrangementen</a>
+                <a href="cadeaubon.html">Cadeaubon</a>
+                <a href="vacatures.html">Vacatures</a>
+                <a href="samesame.html#kunstgalerij">Galerie</a>
+                <a href="kunst-thailand.html">Kunst uit Thailand</a>
+                <a href="meck.html">MECK</a>
+                <a href="blog.html">Blog</a>
+                <a href="fotos.html">Foto's</a>
+                <a href="binnenkijken.html">Binnenkijken</a>
+                <a href="ons-thailand.html">Ons Thailand</a>
+                <a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+                <a href="route.html">Route &amp; Contact</a>
+            </div>
+            <p>Loenderslootseweg 58, 3632 AX Loenen aan de Vecht &nbsp;&bull;&nbsp; <a href="tel:+31346251216">0346 – 25 12 16</a> &nbsp;&bull;&nbsp; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

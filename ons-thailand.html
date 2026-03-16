@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ons Thailand | SameSame Thai Restaurant & Galerie Peter Leen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); }
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.1) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; }
+        .page-header .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--cream); margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        /* Story blocks */
+        .story-block { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-bottom: 6rem; }
+        .story-block.reverse { direction: rtl; }
+        .story-block.reverse > * { direction: ltr; }
+        .story-img { width: 100%; border-radius: 2px; display: block; }
+        .story-img-wrap { position: relative; }
+        .story-img-wrap::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 60%; height: 60%; border: 1px solid rgba(212,168,67,0.2); border-radius: 2px; z-index: -1; }
+        .story-text .label { font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .story-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--cream); margin-bottom: 1.2rem; line-height: 1.3; }
+        .story-text p { color: var(--text-muted); font-size: 0.97rem; line-height: 1.85; margin-bottom: 1rem; }
+        /* Photo gallery strip */
+        .gallery-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin: 3rem 0; }
+        .gallery-4 img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; border-radius: 2px; transition: transform 0.4s; }
+        .gallery-4 img:hover { transform: scale(1.03); }
+        /* Quote block */
+        .quote-block { text-align: center; padding: 5rem 2rem; background: linear-gradient(180deg, #111 0%, var(--dark-bg) 100%); }
+        .quote-block blockquote { font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-style: italic; color: var(--cream); max-width: 780px; margin: 0 auto 1.5rem; line-height: 1.5; }
+        .quote-block cite { color: var(--gold); font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
+        /* Monk blessing */
+        .blessing-block { background: rgba(212,168,67,0.04); border: 1px solid rgba(212,168,67,0.12); border-radius: 4px; padding: 3rem; display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: start; margin: 4rem 0; }
+        .blessing-icon { font-size: 3.5rem; line-height: 1; }
+        .blessing-text h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--cream); margin-bottom: 1rem; }
+        .blessing-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } .story-block, .story-block.reverse { grid-template-columns: 1fr; direction: ltr; gap: 2.5rem; margin-bottom: 4rem; } .story-img-wrap::after { display: none; } .gallery-4 { grid-template-columns: repeat(2, 1fr); } .blessing-block { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; } .gallery-4 { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#menu">Restaurant &#9662;</a><ul class="dropdown"><li><a href="samesame.html#menu">Menu</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#kunstgalerij">Galerie &#9662;</a><ul class="dropdown"><li><a href="samesame.html#kunstgalerij">Kunstenaars</a></li><li><a href="kunst-thailand.html">Kunst uit Thailand</a></li></ul></li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li></ul></li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
+        <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
+        <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
+        <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
+        <a href="samesame.html#kunstgalerij" onclick="toggleMobileMenu()">Galerie</a>
+        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
+        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
+        <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Favoriete Restaurants</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">De Verbinding</span>
+        <h1>Ons Thailand</h1>
+        <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+        <p class="desc">Thailand is geen ver land voor ons het is de bron van alles wat SameSame maakt tot wat het is.</p>
+    </div>
+
+    <section>
+        <div class="section-inner">
+
+            <!-- Teem & Peter -->
+            <div class="story-block fade-in">
+                <div class="story-img-wrap">
+                    <img src="https://www.galeriepeterleen.nl/2022juni-Speciaalgedektvoorpartij_000.jpeg" alt="Teem en Peter" class="story-img" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+                </div>
+                <div class="story-text">
+                    <span class="label">Het Begin</span>
+                    <h2>Peter &amp; Teem twee werelden, één thuis</h2>
+                    <p>Het verhaal van SameSame begint met een ontmoeting. Peter Leen, kunstliefhebber en galeriehouder uit Loenen aan de Vecht, leerde de Thaise Teem kennen tijdens een van zijn reizen door Zuidoost-Azië. Twee mensen, twee culturen verbonden door dezelfde liefde voor schoonheid en gastvrijheid.</p>
+                    <p>Samen brachten ze iets unieks tot leven: een plek waar de warmte van Thailand en de rust van de Vecht samenkomen. &ldquo;SameSame&rdquo; een Thaise uitdrukking voor &ldquo;hetzelfde maar toch anders&rdquo; raakte de kern precies.</p>
+                    <p>Teem brengt de echte Thaise keuken mee, de recepten van haar moeder en grootmoeder. Peter brengt zijn kunstwereld en zijn passie voor het verbinden van mensen. Het resultaat is meer dan een restaurant het is een plek met een ziel.</p>
+                </div>
+            </div>
+
+            <!-- Peat de chef -->
+            <div class="story-block reverse fade-in">
+                <div class="story-img-wrap">
+                    <img src="https://www.galeriepeterleen.nl/Peataanhetwerk-juni2018-uitsnede_002.jpeg" alt="Chef Peat" class="story-img" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+                </div>
+                <div class="story-text">
+                    <span class="label">De Keuken</span>
+                    <h2>Chef Peat de smaak van thuis</h2>
+                    <p>In de keuken staat Peat. Geboren en opgegroeid in centraal Thailand, leerde hij koken van zijn familie in de provincie Nakhon Ratchasima. Zijn keuken is eerlijk, authentiek en vol karakter: hij gebruikt verse kruiden en specerijen die regelmatig rechtstreeks uit Thailand worden meegebracht.</p>
+                    <p>Peat kookt niet voor het menu hij kookt voor de gast. Wensen, allergieën en voorkeuren worden altijd serieus genomen. Elk gerecht is een brief vanuit zijn thuisland, geschreven in smaken.</p>
+                    <p>Zijn specialiteiten variëren van klassieke Pad Thai en Massaman curry tot minder bekende gerechten als Miang Kham (kruidenbroodje) en Khanom Buang (Thais knapperig crepe). Altijd gemaakt met ingrediënten die hij zelf selecteert op de Thaise markt in Amsterdam.</p>
+                </div>
+            </div>
+
+            <!-- Foto's uit Thailand -->
+            <div class="section-header fade-in">
+                <span class="label">Het Land</span>
+                <h2>Thailand door onze ogen</h2>
+                <div class="divider"></div>
+                <p>Elk jaar reizen Peter en Teem naar Thailand. Niet als toeristen als thuiskomers.</p>
+            </div>
+
+            <div class="gallery-4 fade-in">
+                <img src="https://www.galeriepeterleen.nl/GeishaIII-web_001.jpeg" alt="Tempels" loading="lazy" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+                <img src="https://www.galeriepeterleen.nl/images/KleinegerechtenII-okt2024_000.jpg" alt="Markt" loading="lazy" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+                <img src="https://www.galeriepeterleen.nl/2023-LuikIII-doek110x90cm-web_000.jpeg" alt="Natuur" loading="lazy" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+                <img src="https://www.galeriepeterleen.nl/2025-Stillereflextie-100x100cm-web_000.jpeg" alt="Atelier" loading="lazy" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+            </div>
+
+        </div>
+    </section>
+
+    <section class="quote-block">
+        <blockquote>&ldquo;Thailand is voor ons geen inspiratiebron die we op afstand bewonderen. Het is de kern van wie we zijn en wat we doen. Elke dag brengen we een stukje van dat land mee naar de Vecht.&rdquo;</blockquote>
+        <cite>Peter Leen, oprichter SameSame</cite>
+    </section>
+
+    <section>
+        <div class="section-inner">
+
+            <!-- Monniken zegen -->
+            <div class="blessing-block fade-in">
+                <div class="blessing-icon">&#9654;&#65039;</div>
+                <div class="blessing-text">
+                    <h3>De zegen van de monniken</h3>
+                    <p>Toen SameSame voor het eerst zijn deuren opende, was er een bijzonder moment: Thaise boeddhistische monniken spraken een formele zegen uit over het pand en zijn gasten. Een ritueel dat diep geworteld is in de Thaise cultuur, waarbij monniken bidden voor welzijn, vrede en overvloed voor de plek en alle mensen die er binnenkomen.</p>
+                    <p>Deze zegen wordt elk jaar vernieuwd. Voor Peter en Teem is het niet alleen traditie het is een manier om de authentieke Thaise geest levend te houden in het hart van de Nederlandse polders. Gasten die aanwezig waren beschrijven het als een ontroerende ervaring die de sfeer van SameSame permanent heeft gevormd.</p>
+                </div>
+            </div>
+
+            <!-- De Thaise Kunst -->
+            <div class="story-block fade-in" style="margin-top:4rem;">
+                <div class="story-img-wrap">
+                    <img src="https://www.galeriepeterleen.nl/images/2026-KyotoGreen-150x100cm.jpg" alt="Somporn Seethong" class="story-img" onerror="this.style.background='#1a1a1a';this.removeAttribute('src')">
+                </div>
+                <div class="story-text">
+                    <span class="label">Kunst &amp; Verbinding</span>
+                    <h2>De kunstenaars die ons hart stalen</h2>
+                    <p>Peter Leen reist naar Thailand niet alleen voor persoonlijk contact, maar ook om kunstenaars te ontdekken die de essentie van hun land vastleggen op doek, papier en steen.</p>
+                    <p>Somporn Seethong maakt indrukwekkende schilderijen waarbij hij karton in lagen opbouwt een techniek die hij zelf ontwikkelde. Parinyawich Choosang schildert zijn iconische Geisha-serie, die de spanning tussen traditie en moderniteit visualiseert. Tanakok &ldquo;Ton&rdquo; Chunrattana vervaardigt intense houtskooltekeningen van het Thaise platteland.</p>
+                    <p>Al deze kunstenaars zijn in Nederland uitsluitend via Galerie Peter Leen verkrijgbaar. Een unieke band die jaren van persoonlijk contact vergt en die elke keer opnieuw wordt gevoed door reizen naar Thailand.</p>
+                    <a href="kunst-thailand.html" style="color:var(--gold);text-decoration:none;font-size:0.82rem;letter-spacing:1.5px;text-transform:uppercase;display:inline-block;margin-top:1.2rem;border-bottom:1px solid rgba(212,168,67,0.3);padding-bottom:2px;">Ontdek de kunst uit Thailand &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="footer-logo">
+            <div class="footer-links">
+                <a href="samesame.html">Home</a>
+                <a href="reserveren.html">Reserveren</a>
+                <a href="arrangementen.html">Arrangementen</a>
+                <a href="cadeaubon.html">Cadeaubon</a>
+                <a href="vacatures.html">Vacatures</a>
+                <a href="samesame.html#kunstgalerij">Galerie</a>
+                <a href="kunst-thailand.html">Kunst uit Thailand</a>
+                <a href="meck.html">MECK</a>
+                <a href="blog.html">Blog</a>
+                <a href="fotos.html">Foto's</a>
+                <a href="binnenkijken.html">Binnenkijken</a>
+                <a href="ons-thailand.html">Ons Thailand</a>
+                <a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+                <a href="route.html">Route &amp; Contact</a>
+            </div>
+            <p>Loenderslootseweg 58, 3632 AX Loenen aan de Vecht &nbsp;&bull;&nbsp; <a href="tel:+31346251216">0346 – 25 12 16</a> &nbsp;&bull;&nbsp; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

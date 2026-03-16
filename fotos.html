@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foto's | SameSame Thai Restaurant & Galerie Peter Leen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); }
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.1) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; }
+        .page-header .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--cream); margin-bottom: 1rem; }
+        /* Tab filter */
+        .filter-tabs { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .filter-tab { padding: 0.5rem 1.4rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; background: transparent; border: 1px solid rgba(212,168,67,0.2); border-radius: 2px; color: var(--text-muted); cursor: pointer; transition: all 0.3s; font-family: 'Inter', sans-serif; }
+        .filter-tab:hover, .filter-tab.active { background: var(--gold); color: var(--black); border-color: var(--gold); }
+        /* Masonry grid */
+        .photo-grid { columns: 4; gap: 0.8rem; }
+        .photo-grid .photo-item { break-inside: avoid; margin-bottom: 0.8rem; position: relative; overflow: hidden; border-radius: 2px; cursor: pointer; }
+        .photo-grid .photo-item img { width: 100%; display: block; transition: transform 0.5s; }
+        .photo-grid .photo-item:hover img { transform: scale(1.04); }
+        .photo-grid .photo-item .photo-caption { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.8)); padding: 1.5rem 0.8rem 0.8rem; color: var(--text-light); font-size: 0.78rem; opacity: 0; transition: opacity 0.3s; }
+        .photo-grid .photo-item:hover .photo-caption { opacity: 1; }
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; align-items: center; justify-content: center; padding: 2rem; }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 2px; }
+        .lightbox-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: #fff; font-size: 2.5rem; cursor: pointer; line-height: 1; }
+        .lightbox-caption { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); color: var(--text-muted); font-size: 0.85rem; text-align: center; white-space: nowrap; }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } .photo-grid { columns: 3; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; } .photo-grid { columns: 2; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#menu">Restaurant &#9662;</a><ul class="dropdown"><li><a href="samesame.html#menu">Menu</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#kunstgalerij">Galerie &#9662;</a><ul class="dropdown"><li><a href="samesame.html#kunstgalerij">Kunstenaars</a></li><li><a href="kunst-thailand.html">Kunst uit Thailand</a></li></ul></li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li></ul></li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
+        <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
+        <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
+        <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
+        <a href="samesame.html#kunstgalerij" onclick="toggleMobileMenu()">Galerie</a>
+        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
+        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
+        <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Favoriete Restaurants</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">In Beeld</span>
+        <h1>Foto's</h1>
+        <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+        <p class="desc">Een visueel overzicht van het restaurant, de galerie, ons terras aan de Vecht en de kunst die we tonen.</p>
+    </div>
+
+    <section>
+        <div class="section-inner">
+            <div class="filter-tabs fade-in">
+                <button class="filter-tab active" onclick="filterPhotos('all', this)">Alles</button>
+                <button class="filter-tab" onclick="filterPhotos('restaurant', this)">Restaurant</button>
+                <button class="filter-tab" onclick="filterPhotos('galerie', this)">Galerie</button>
+                <button class="filter-tab" onclick="filterPhotos('terras', this)">Terras</button>
+                <button class="filter-tab" onclick="filterPhotos('thailand', this)">Thailand</button>
+                <button class="filter-tab" onclick="filterPhotos('kunst', this)">Kunst</button>
+            </div>
+
+            <div class="photo-grid fade-in" id="photoGrid">
+                <div class="photo-item" data-cat="restaurant" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/2023-XLoktII-web_001.jpeg" alt="Restaurant interieur" loading="lazy">
+                    <div class="photo-caption">Restaurant interieur</div>
+                </div>
+                <div class="photo-item" data-cat="kunst" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/358-landschap-90x120cm-gemengdetechniekoplinnen-web.jpeg" alt="Niels Schouten" loading="lazy">
+                    <div class="photo-caption">Niels Schouten</div>
+                </div>
+                <div class="photo-item" data-cat="restaurant" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/images/KleinegerechtenII-okt2024_000.jpg" alt="Thaise gerechten" loading="lazy">
+                    <div class="photo-caption">Thaise gerechten</div>
+                </div>
+                <div class="photo-item" data-cat="kunst" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/2025-Stillereflextie-100x100cm-web_000.jpeg" alt="Suzan Bastings" loading="lazy">
+                    <div class="photo-caption">Suzan Bastings</div>
+                </div>
+                <div class="photo-item" data-cat="restaurant" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/Peataanhetwerk-juni2018-uitsnede_002.jpeg" alt="Chef Peat" loading="lazy">
+                    <div class="photo-caption">Chef Peat aan het werk</div>
+                </div>
+                <div class="photo-item" data-cat="kunst" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/2025-BlueEyesII-940Model2517-110x110cm-web_001.jpeg" alt="Harold Aspers" loading="lazy">
+                    <div class="photo-caption">Harold Aspers</div>
+                </div>
+                <div class="photo-item" data-cat="terras" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/2022juni-Speciaalgedektvoorpartij_000.jpeg" alt="Speciaal gedekt terras" loading="lazy">
+                    <div class="photo-caption">Speciaal gedekt voor een feest</div>
+                </div>
+                <div class="photo-item" data-cat="kunst" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/2023-LuikIII-doek110x90cm-web_000.jpeg" alt="Harm van der Meulen" loading="lazy">
+                    <div class="photo-caption">Harm van der Meulen</div>
+                </div>
+                <div class="photo-item" data-cat="galerie" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/images/MuziekcafemetArjenFridaJoostenGert-web_004.jpg" alt="Live muziek in SameSame" loading="lazy">
+                    <div class="photo-caption">Live muziek in de galerie</div>
+                </div>
+                <div class="photo-item" data-cat="kunst" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/images/2014-JiaBeiLe-Wokrestaurant-paneel75x150cm_005.jpg" alt="Jia Bei Le" loading="lazy">
+                    <div class="photo-caption">Jia Bei Le</div>
+                </div>
+                <div class="photo-item" data-cat="thailand" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/GeishaIII-web_001.jpeg" alt="Parinyawich Choosang" loading="lazy">
+                    <div class="photo-caption">Parinyawich Choosang Geisha III</div>
+                </div>
+                <div class="photo-item" data-cat="thailand" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/images/2026-KyotoGreen-150x100cm.jpg" alt="Somporn Seethong" loading="lazy">
+                    <div class="photo-caption">Somporn Seethong</div>
+                </div>
+                <div class="photo-item" data-cat="kunst" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/2022-PineConelong-cortensteel-200x65x65cm-web_000.jpeg" alt="Kim Kenyon" loading="lazy">
+                    <div class="photo-caption">Kim Kenyon cortenstaal sculptuur</div>
+                </div>
+                <div class="photo-item" data-cat="galerie" onclick="openLightbox(this)">
+                    <img src="https://www.galeriepeterleen.nl/images/ZijneMajesteit-57cm-2014-web_004.jpg" alt="Desirée Wijgman" loading="lazy">
+                    <div class="photo-caption">Desirée Wijgman brons</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightboxImg" src="" alt="">
+        <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="footer-logo">
+            <div class="footer-links">
+                <a href="samesame.html">Home</a>
+                <a href="reserveren.html">Reserveren</a>
+                <a href="arrangementen.html">Arrangementen</a>
+                <a href="cadeaubon.html">Cadeaubon</a>
+                <a href="vacatures.html">Vacatures</a>
+                <a href="samesame.html#kunstgalerij">Galerie</a>
+                <a href="kunst-thailand.html">Kunst uit Thailand</a>
+                <a href="meck.html">MECK</a>
+                <a href="blog.html">Blog</a>
+                <a href="fotos.html">Foto's</a>
+                <a href="binnenkijken.html">Binnenkijken</a>
+                <a href="ons-thailand.html">Ons Thailand</a>
+                <a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+                <a href="route.html">Route &amp; Contact</a>
+            </div>
+            <p>Loenderslootseweg 58, 3632 AX Loenen aan de Vecht &nbsp;&bull;&nbsp; <a href="tel:+31346251216">0346 – 25 12 16</a> &nbsp;&bull;&nbsp; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+        function filterPhotos(cat, btn) {
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.photo-item').forEach(item => {
+                if (cat === 'all' || item.dataset.cat === cat) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        function openLightbox(el) {
+            const img = el.querySelector('img');
+            const cap = el.querySelector('.photo-caption');
+            document.getElementById('lightboxImg').src = img.src;
+            document.getElementById('lightboxImg').alt = img.alt;
+            document.getElementById('lightboxCaption').textContent = cap ? cap.textContent : '';
+            document.getElementById('lightbox').classList.add('open');
+        }
+        function closeLightbox(e) {
+            if (!e || e.target !== document.getElementById('lightboxImg')) {
+                document.getElementById('lightbox').classList.remove('open');
+            }
+        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

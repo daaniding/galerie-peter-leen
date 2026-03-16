@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunst uit Thailand | SameSame & Galerie Peter Leen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); }
+        section { padding: 5rem 2rem; }
+        .alt-bg { background: #0a0a0a; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.12) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; }
+        .page-header .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        .section-header { text-align: center; margin-bottom: 3rem; }
+        .section-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .section-header h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--cream); margin-bottom: 1rem; }
+        .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .two-col.reverse { direction: rtl; }
+        .two-col.reverse > * { direction: ltr; }
+        .art-image { position: relative; overflow: hidden; border-radius: 4px; }
+        .art-image img { width: 100%; height: 400px; object-fit: cover; display: block; transition: transform 0.6s; }
+        .art-image:hover img { transform: scale(1.03); }
+        .art-image::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--gold); opacity: 0.2; pointer-events: none; }
+        .art-text h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--cream); margin-bottom: 1.2rem; }
+        .art-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.85; margin-bottom: 1rem; }
+        .art-text .detail { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.5rem; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-top: 3rem; }
+        .gallery-item { overflow: hidden; border-radius: 4px; position: relative; cursor: pointer; }
+        .gallery-item img { width: 100%; height: 260px; object-fit: cover; display: block; transition: transform 0.6s; }
+        .gallery-item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(13,13,13,0.65) 100%); opacity: 0; transition: opacity 0.4s; }
+        .gallery-item:hover img { transform: scale(1.06); }
+        .gallery-item:hover::after { opacity: 1; }
+        .gallery-caption { position: absolute; bottom: 1rem; left: 1rem; z-index: 2; font-size: 0.8rem; color: var(--cream); font-weight: 500; opacity: 0; transform: translateY(8px); transition: all 0.4s; }
+        .gallery-item:hover .gallery-caption { opacity: 1; transform: translateY(0); }
+        .story-block { background: rgba(255,255,255,0.02); border: 1px solid rgba(212,168,67,0.1); border-radius: 4px; padding: 3rem; font-style: italic; }
+        .story-block p { color: var(--text-muted); font-size: 1rem; line-height: 1.9; margin-bottom: 1rem; }
+        .story-block .story-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--gold); font-style: italic; margin-bottom: 1.5rem; text-align: center; }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } .two-col { grid-template-columns: 1fr; gap: 2rem; } .two-col.reverse { direction: ltr; } .gallery-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; } .gallery-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#menu">Restaurant &#9662;</a><ul class="dropdown"><li><a href="samesame.html#menu">Menu</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#kunstgalerij">Galerie &#9662;</a><ul class="dropdown"><li><a href="samesame.html#kunstgalerij">Kunstenaars</a></li><li><a href="kunst-thailand.html">Kunst uit Thailand</a></li></ul></li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li></ul></li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
+        <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
+        <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
+        <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
+        <a href="samesame.html#kunstgalerij" onclick="toggleMobileMenu()">Galerie</a>
+        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
+        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
+        <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Favoriete Restaurants</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">Galerie Peter Leen XL</span>
+        <h1>Kunst uit Thailand</h1>
+        <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+        <p class="desc">Een unieke collectie Thaise kunst van eeuwenoude bronzen boeddha's tot hedendaagse olieverfschilderijen.</p>
+    </div>
+
+    <!-- Bronzen Boeddha's -->
+    <section>
+        <div class="section-inner">
+            <div class="two-col">
+                <div class="art-image fade-in">
+                    <img src="https://www.galeriepeterleen.nl/2026-BoeddhabeeldenI-48304048cm_000.jpeg" alt="Bronzen Boeddha beelden" loading="lazy">
+                </div>
+                <div class="art-text fade-in">
+                    <span class="detail">Collectie</span>
+                    <h3>Bronzen Boeddha Beelden</h3>
+                    <p>Drie unieke bronzen boeddhabeelden in de <em>Bhumisparsha Mudra</em> de aardgetuigenispose. Op het moment dat de Boeddha de verlichting nabij was, raakte hij de aarde aan met zijn rechterhand als getuige van de waarheid van zijn woorden.</p>
+                    <p>Alle drie de beelden zijn gezegend in het <strong>Wat Wang Luang</strong> tempel in Ban Wang Khon Daeng, Noordoost-Thailand.</p>
+                    <p style="color:var(--text-muted);font-size:0.85rem;margin-top:1rem;border-top:1px solid rgba(212,168,67,0.15);padding-top:1rem;">
+                        &bull; Chiang Saen stijl &bull; 56 cm &bull; ca. 1930<br>
+                        &bull; Sukhothai stijl &bull; 41 cm &bull; ca. 1950<br>
+                        &bull; Chiang Saen stijl &bull; 37 cm &bull; ca. 1950
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ban Chiang Potten -->
+    <section class="alt-bg">
+        <div class="section-inner">
+            <div class="two-col reverse">
+                <div class="art-image fade-in">
+                    <img src="https://www.galeriepeterleen.nl/images/BanChiangV_000.jpg" alt="Ban Chiang Potten" loading="lazy">
+                </div>
+                <div class="art-text fade-in">
+                    <span class="detail">Prehistorisch &bull; UNESCO</span>
+                    <h3>Ban Chiang Potten</h3>
+                    <p>Ban Chiang is een archeologische vindplaats in de provincie Udon Thani, Thailand beschouwd als de <em>belangrijkste prehistorische nederzetting van Zuidoost-Azi&euml;</em> en erkend als UNESCO Werelderfgoed.</p>
+                    <p>De collectie bestaat uit rode potten (~1000 v.Chr.) met geschilderde geometrische patronen, en zwarte potten (~2000 v.Chr.) met ingekraste versieringen.</p>
+                    <p>Deze bijzondere stukken kwamen in Nederland terecht via een cultureel antropoloog die betrokken was bij de opgravingen in de late jaren '60. Ze zijn een zeldzame verbinding tussen het verre verleden en het heden.</p>
+                </div>
+            </div>
+            <div class="gallery-grid fade-in" style="margin-top:3rem;">
+                <div class="gallery-item"><img src="https://www.galeriepeterleen.nl/images/ZwartepottenIII-2000vChr-web_000.jpg" alt="Zwarte Ban Chiang pot" loading="lazy"><span class="gallery-caption">Zwarte pot ~2000 v.Chr.</span></div>
+                <div class="gallery-item"><img src="https://www.galeriepeterleen.nl/images/ZwartepottenVI-2000vChr-web_000.jpg" alt="Zwarte Ban Chiang pot" loading="lazy"><span class="gallery-caption">Zwarte pot ~2000 v.Chr.</span></div>
+                <div class="gallery-item"><img src="https://www.galeriepeterleen.nl/images/025_000.jpg" alt="Ban Chiang rode potten" loading="lazy"><span class="gallery-caption">Rode potten ~1000 v.Chr.</span></div>
+                <div class="gallery-item"><img src="https://www.galeriepeterleen.nl/images/BanChianggroep_000.jpg" alt="Ban Chiang potten groep" loading="lazy"><span class="gallery-caption">Ban Chiang collectie</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thai Schilderijen -->
+    <section>
+        <div class="section-inner">
+            <div class="section-header fade-in">
+                <span class="label">Hedendaagse Kunst</span>
+                <h2>Thaise Schilderijen</h2>
+                <div class="divider"></div>
+                <p>Twee Thaise schilders exclusief vertegenwoordigd in Nederland door Galerie Peter Leen XL.</p>
+            </div>
+            <div class="two-col">
+                <div class="art-image fade-in">
+                    <img src="https://www.galeriepeterleen.nl/images/2026-KyotoGreen-150x100cm.jpg" alt="Somporn Seethong - Kyoto Green" loading="lazy">
+                </div>
+                <div class="art-text fade-in">
+                    <span class="detail">Exclusief in Nederland</span>
+                    <h3>Somporn Seethong</h3>
+                    <p>Geboren in 1974 in Roi Et, Isaan, Thailand. Opgeleid aan het Wat Hiranruji Art School in Bangkok. Somporn is onafhankelijk kunstenaar sinds 1996 en wordt <strong>exclusief vertegenwoordigd in Nederland</strong> door Galerie Peter Leen XL.</p>
+                    <p>Zijn werk omvat grote kleurrijke landschappen en figuratieve scènes op olieverf. Prijzen en beschikbaarheid op aanvraag via <a href="mailto:info@galeriepeterleen.nl" style="color:var(--gold);">info@galeriepeterleen.nl</a>.</p>
+                    <p style="color:var(--text-muted);font-size:0.82rem;margin-top:0.8rem;">Kyoto Green &bull; South Thailand &bull; Emotion &bull; Red Dress olieverf op linnen, 150×100 cm</p>
+                </div>
+            </div>
+            <div class="two-col reverse" style="margin-top:5rem;">
+                <div class="art-image fade-in">
+                    <img src="https://www.galeriepeterleen.nl/GeishaIII-web_001.jpeg" alt="Parinyawich Choosang - Geisha" loading="lazy">
+                </div>
+                <div class="art-text fade-in">
+                    <span class="detail">Taksin Art Academy, Thailand</span>
+                    <h3>Parinyawich Choosang</h3>
+                    <p>Geboren in 1984 in Trang, Thailand. Opgeleid aan de Taksin Art Academy. Zijn indrukwekkende <em>Geisha-serie</em> op groot formaat olieverf doek toont een meesterlijke beheersing van licht, compositie en emotie.</p>
+                    <p>De werken zijn beschikbaar in formaten tot 200×150 cm. Neem contact op voor beschikbaarheid en prijzen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Houtskooltekeningen -->
+    <section class="alt-bg">
+        <div class="section-inner">
+            <div class="two-col">
+                <div class="art-image fade-in">
+                    <img src="https://www.galeriepeterleen.nl/2013-Time-80x60cm-web.jpeg" alt="Tanakok Chunrattana - Time" loading="lazy">
+                </div>
+                <div class="art-text fade-in">
+                    <span class="detail">Hyperrealistisch</span>
+                    <h3>Houtskooltekeningen</h3>
+                    <h4 style="color:var(--gold);font-family:'Playfair Display',serif;font-style:italic;margin-bottom:1rem;">Tanakok Chunrattana &ldquo;Ton&rdquo;</h4>
+                    <p>In 2012 ontmoette Peter deze bijzondere Thaise kunstenaar. Zijn hyperrealistische houtskooltekeningen zijn zo gedetailleerd dat kijkers ze regelmatig aanzien voor foto's. De eerste aankoop een portret van een oude vrouw hangt nog steeds in het restaurant en trekt dagelijks bewonderende blikken.</p>
+                    <p>Ton's verhaal is er een van veerkracht: na een moeilijk verleden vond hij via kunst zijn weg terug. Zijn werk is een krachtige getuigenis van menselijke wil en schoonheid.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Het Verhaal -->
+    <section>
+        <div class="section-inner">
+            <div class="section-header fade-in">
+                <span class="label">Oosters Verhaal</span>
+                <h2>De Thaise Schilder en de Dood</h2>
+                <div class="divider"></div>
+            </div>
+            <div class="story-block fade-in">
+                <div class="story-title">Een Oosters verhaal over een man die nog niet dood wil</div>
+                <p>Er was eens een Thaise schilder die elke dag op markten en in theesalons zat te observeren. 's Nachts schilderde hij de gezichten van wie hij had gezien. Op een dag verscheen de Dood aan zijn deur. Maar de Dood raakte zo geboeid door het zien van de schilder aan het werk een adembenemend portret van een jong meisje dat hij vergat wat zijn taak was.</p>
+                <p>De schilder schilderde zo lang en zo mooi dat de Dood hem telkens uitstel gaf. Uiteindelijk bracht de schilder de Dood in verlegenheid voor de Hemelse Keizer zelf. Tot ieders verbazing verleende de Keizer de schilder een bijzondere taak: voortaan schildert hij de gezichten van zielen die op het punt staan geboren te worden op aarde.</p>
+                <p>Thaise zwangere vrouwen brengen tot op de dag van vandaag offers aan deze schilder in de hoop dat hij hun kind een mooi gezicht schenkt.</p>
+                <p style="text-align:right;font-size:0.82rem;color:var(--gold);margin-top:1rem;">Galerie Peter Leen</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame Logo" class="footer-logo">
+            <div class="footer-links">
+                <a href="reserveren.html">Reserveren</a><a href="route.html">Route</a><a href="cadeaubon.html">Cadeaubon</a><a href="vacatures.html">Vacatures</a><a href="kunst-thailand.html">Kunst uit Thailand</a><a href="arrangementen.html">Arrangementen</a><a href="meck.html">MECK</a><a href="blog.html">Blog</a><a href="fotos.html">Foto's</a><a href="binnenkijken.html">Binnenkijken</a><a href="ons-thailand.html">Ons Thailand</a><a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+            </div>
+            <p>SameSame Thai Restaurant &amp; Galerie Peter Leen XL &bull; Herenstraat 25, 3621 AP Breukelen</p>
+            <p style="margin-top:0.4rem;"><a href="tel:0346251216">0346 25 12 16</a> &bull; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+            <p style="margin-top:0.5rem;opacity:0.5;">Een synergie van hedendaagse kunst, muziek en heerlijk Thais eten.</p>
+        </div>
+    </footer>
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
