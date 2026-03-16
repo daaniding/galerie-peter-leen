@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brooklyn Gallery Award | Galerie Peter Leen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); }
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 1000px; margin: 0 auto; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.1) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; }
+        .page-header .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        /* Award intro */
+        .award-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 5rem; }
+        .award-intro img { width: 100%; border-radius: 4px; display: block; }
+        .award-intro-text .label { font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; display: block; }
+        .award-intro-text h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); color: var(--cream); margin-bottom: 1.2rem; }
+        .award-intro-text p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.85; margin-bottom: 1rem; }
+        /* Award list */
+        .award-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+        .award-row { display: grid; grid-template-columns: 80px 1fr; gap: 1rem; align-items: center; padding: 1rem 1.2rem; background: rgba(255,255,255,0.02); border: 1px solid rgba(212,168,67,0.07); border-radius: 3px; transition: all 0.3s; }
+        .award-row:hover { border-color: rgba(212,168,67,0.25); background: rgba(212,168,67,0.04); }
+        .award-year { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; }
+        .award-name { color: var(--cream); font-size: 0.9rem; font-weight: 500; }
+        .award-medium { color: var(--text-muted); font-size: 0.78rem; margin-top: 0.2rem; }
+        /* Calla section */
+        .calla-block { background: rgba(212,168,67,0.04); border: 1px solid rgba(212,168,67,0.12); border-radius: 4px; padding: 3rem; text-align: center; margin-top: 4rem; }
+        .calla-block h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 1rem; }
+        .calla-block p { color: var(--text-muted); max-width: 580px; margin: 0 auto; font-size: 0.95rem; line-height: 1.8; }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } .award-intro { grid-template-columns: 1fr; gap: 2rem; } .award-list { grid-template-columns: 1fr; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="samesame.html#menu">Restaurant &#9662;</a><ul class="dropdown"><li><a href="samesame.html#menu">Menu</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
+                <li class="has-dropdown"><a href="kunstenaars.html">Galerie &#9662;</a><ul class="dropdown"><li><a href="kunstenaars.html">Kunstenaars</a></li><li><a href="kunst-thailand.html">Kunst uit Thailand</a></li><li><a href="brooklyn-gallery-award.html">Brooklyn Gallery Award</a></li></ul></li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li></ul></li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
+        <a href="kunstenaars.html" onclick="toggleMobileMenu()">Kunstenaars</a>
+        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="brooklyn-gallery-award.html" onclick="toggleMobileMenu()">Brooklyn Gallery Award</a>
+        <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
+        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
+        <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">Galerie Peter Leen</span>
+        <h1>Brooklyn Gallery Award</h1>
+        <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+        <p class="desc">Jaarlijkse onderscheiding voor een kunstenaar die zich bijzonder onderscheidt. Uitgereikt door Galerie Peter Leen sinds 2000.</p>
+    </div>
+
+    <section>
+        <div class="section-inner">
+            <div class="award-intro fade-in">
+                <img src="https://www.galeriepeterleen.nl/images/ZijneMajesteit-57cm-2014-web_004.jpg" alt="Brooklyn Gallery Award trofee" loading="lazy">
+                <div class="award-intro-text">
+                    <span class="label">Over de Award</span>
+                    <h2>Een brons voor kunstenaars die het verschil maken</h2>
+                    <p>De Brooklyn Gallery Award is een jaarlijkse prijs die Galerie Peter Leen uitreikt aan een kunstenaar die zich in het afgelopen seizoen bijzonder heeft onderscheiden. De trofee is een bronzen calla-bloem, ontworpen en gegoten door beeldhouwster Desirée Wijgman.</p>
+                    <p>De calla werd gekozen omdat deze bloem veelvuldig voorkomt in het werk van de eerste winnaar, Ellis Tertoolen. Het is een symbool van de samenwerking en wederzijdse afhankelijkheid tussen galerie en kunstenaar: de galerie heeft kunst nodig om te bestaan, de kunstenaar heeft verkopen nodig om te kunnen maken.</p>
+                    <p>Wat begon als een ludieke geste groeide uit tot een serieus, jaarlijks terugkerend evenement aan het begin van het nieuwe kunstseizoen. Peter Leen is de enige jurylid.</p>
+                </div>
+            </div>
+
+            <div style="text-align:center;margin-bottom:2.5rem;" class="fade-in">
+                <span style="font-size:0.75rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">Winnaars</span>
+                <h2 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--cream);margin:1rem 0;">Alle winnaars 2000 &ndash; 2013</h2>
+                <div style="width:60px;height:2px;background:var(--gold);margin:0 auto;"></div>
+            </div>
+
+            <div class="award-list fade-in">
+                <div class="award-row">
+                    <div class="award-year">2000</div>
+                    <div><div class="award-name">Ellis Tertoolen</div><div class="award-medium">Schilderes</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2001</div>
+                    <div><div class="award-name">Hans Leijerzapf</div><div class="award-medium">Schilder</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2002</div>
+                    <div><div class="award-name">Anna Verrijt</div><div class="award-medium">Kunstenares</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2003</div>
+                    <div><div class="award-name">Margriet Barends &amp; Harm van der Meulen</div><div class="award-medium">Beeldhouwster &amp; Schilder</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2004</div>
+                    <div><div class="award-name">Bernard de Wolff</div><div class="award-medium">Kunstenaar</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2005</div>
+                    <div><div class="award-name">Niels Schouten</div><div class="award-medium">Schilder</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2006</div>
+                    <div><div class="award-name">Desirée Wijgman</div><div class="award-medium">Beeldhouwster</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2007</div>
+                    <div><div class="award-name">Joop Witteveen</div><div class="award-medium">Beeldhouwer</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2008</div>
+                    <div><div class="award-name">Harrie Schouten</div><div class="award-medium">Kunstenaar</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2009</div>
+                    <div><div class="award-name">Christiaan Lieverse</div><div class="award-medium">Kunstenaar</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2010</div>
+                    <div><div class="award-name">Frans Schuursma</div><div class="award-medium">Schilder</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2011</div>
+                    <div><div class="award-name">Pieter J. Knorr</div><div class="award-medium">Kunstenaar</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2012</div>
+                    <div><div class="award-name">Toos van Holstein</div><div class="award-medium">Kunstenares</div></div>
+                </div>
+                <div class="award-row">
+                    <div class="award-year">2013</div>
+                    <div><div class="award-name">Bernadette Leijdekkers</div><div class="award-medium">Kunstenares</div></div>
+                </div>
+            </div>
+
+            <div class="calla-block fade-in">
+                <h3>De trofee: een bronzen calla</h3>
+                <p>De calla-trofee wordt elk jaar opnieuw gegoten door Desirée Wijgman, winnaar van de award in 2006. Ze koos de calla omdat deze bloem regelmatig terugkeert in het werk van Ellis Tertoolen, de eerste winnaar. Elke trofee is uniek en met de hand afgewerkt. Het is een van de meest persoonlijke kunstprijzen van Nederland.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="footer-logo">
+            <div class="footer-links">
+                <a href="samesame.html">Home</a>
+                <a href="reserveren.html">Reserveren</a>
+                <a href="kunstenaars.html">Kunstenaars</a>
+                <a href="brooklyn-gallery-award.html">Brooklyn Gallery Award</a>
+                <a href="kunst-thailand.html">Kunst uit Thailand</a>
+                <a href="meck.html">MECK</a>
+                <a href="blog.html">Blog</a>
+                <a href="fotos.html">Foto's</a>
+                <a href="binnenkijken.html">Binnenkijken</a>
+                <a href="ons-thailand.html">Ons Thailand</a>
+                <a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+                <a href="route.html">Route &amp; Contact</a>
+            </div>
+            <p>Herenstraat 25, 3621 AP Breukelen &bull; <a href="tel:+31346251216">0346 25 12 16</a> &bull; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+        </div>
+    </footer>
+    <script>
+        function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+        const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
