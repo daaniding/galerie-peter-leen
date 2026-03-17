@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeriewinkel — Kunst Cadeau | Galerie Peter Leen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --gold: #D4A843; --gold-light: #E8C96A; --cream: #FDF5E6; --black: #1A1A1A; --dark-bg: #0D0D0D; --text-light: #F0E6D3; --text-muted: #B8A990; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 0.6rem 2rem; background: rgba(13,13,13,0.97); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.5); }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { height: 36px; }
+        .nav-links { display: flex; list-style: none; gap: 1.5rem; align-items: center; }
+        .nav-links > li { position: relative; }
+        .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; position: relative; transition: color 0.3s; display: block; padding: 0.3rem 0; }
+        .nav-links > li > a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background: var(--gold); transition: width 0.3s; }
+        .nav-links > li > a:hover { color: var(--gold); }
+        .nav-links > li > a:hover::after { width: 100%; }
+        .has-dropdown { position: relative; }
+        .dropdown { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(10,10,10,0.98); backdrop-filter: blur(12px); border: 1px solid rgba(212,168,67,0.2); border-radius: 4px; padding: 10px 0 0.6rem; min-width: 190px; z-index: 200; list-style: none; }
+        .has-dropdown:hover .dropdown { display: block; }
+        .dropdown li a { display: block; padding: 0.5rem 1.2rem; font-size: 0.78rem; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; transition: color 0.2s, background 0.2s; }
+        .dropdown li a::after { display: none !important; }
+        .dropdown li a:hover { color: var(--gold); background: rgba(212,168,67,0.06); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 5px; }
+        .hamburger span { width: 28px; height: 2px; background: var(--text-light); }
+        section { padding: 5rem 2rem; }
+        .section-inner { max-width: 1100px; margin: 0 auto; }
+        .divider { width: 60px; height: 2px; background: var(--gold); margin: 1.2rem auto; }
+        .page-header { padding-top: 120px; padding-bottom: 4rem; background: linear-gradient(180deg, #0f0f0f 0%, var(--dark-bg) 100%); text-align: center; position: relative; overflow: hidden; }
+        .page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 60%, rgba(107,15,15,0.1) 0%, transparent 70%); pointer-events: none; }
+        .page-header .label { font-size: 0.75rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; display: block; }
+        .page-header h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700; color: var(--cream); margin-bottom: 1.2rem; }
+        .page-header .desc { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 1rem; }
+        .tagline { text-align: center; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.2rem; color: var(--cream); margin-bottom: 4rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem; }
+        .product-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(212,168,67,0.12); border-radius: 4px; padding: 2rem; transition: all 0.4s; }
+        .product-card:hover { border-color: rgba(212,168,67,0.35); transform: translateY(-3px); }
+        .product-card .cat { font-size: 0.72rem; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; display: block; }
+        .product-card h3 { font-family: 'Playfair Display', serif; color: var(--cream); font-size: 1.2rem; margin-bottom: 0.8rem; }
+        .product-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.75; margin-bottom: 1rem; }
+        .product-price { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.15rem; }
+        .product-price .old { text-decoration: line-through; color: var(--text-muted); font-size: 0.85rem; margin-right: 0.5rem; }
+        .cta-block { background: rgba(212,168,67,0.04); border: 1px solid rgba(212,168,67,0.12); border-radius: 4px; padding: 3rem; text-align: center; margin-top: 4rem; }
+        .cta-block h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 1rem; }
+        .cta-block p { color: var(--text-muted); max-width: 500px; margin: 0 auto 1.5rem; }
+        .btn { display: inline-block; padding: 0.9rem 2.2rem; font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: all 0.3s; }
+        .btn-primary { background: var(--gold); color: var(--black); }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+        footer { background: #080808; border-top: 1px solid rgba(212,168,67,0.1); padding: 3rem 2rem 2rem; text-align: center; }
+        .footer-inner { max-width: 1100px; margin: 0 auto; }
+        .footer-logo { height: 40px; margin-bottom: 1.5rem; opacity: 0.7; }
+        .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.2rem; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(212,168,67,0.08); }
+        .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--gold); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        footer p a { color: var(--gold); text-decoration: none; }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s, transform 0.7s; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .mobile-menu { display: none; position: fixed; inset: 0; background: rgba(13,13,13,0.98); z-index: 999; flex-direction: column; align-items: center; justify-content: center; gap: 1.1rem; overflow-y: auto; padding: 4rem 2rem; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu a { color: var(--cream); text-decoration: none; font-family: 'Playfair Display', serif; font-size: 1.3rem; transition: color 0.3s; }
+        .mobile-menu a:hover { color: var(--gold); }
+        .mobile-close { position: absolute; top: 1.5rem; right: 2rem; background: none; border: none; color: var(--cream); font-size: 2rem; cursor: pointer; }
+        @media (max-width: 900px) { .nav-links { display: none; } .hamburger { display: flex; } .products-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 600px) { section { padding: 3.5rem 1.2rem; } .page-header { padding-top: 90px; } .products-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
+            <ul class="nav-links">
+                <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
+                <li class="has-dropdown"><a href="menu.html">Restaurant &#9662;</a><ul class="dropdown"><li><a href="menu.html">Menukaart</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
+                <li class="has-dropdown"><a href="kunstenaars.html">Galerie &#9662;</a><ul class="dropdown"><li><a href="kunstenaars.html">Kunstenaars</a></li><li><a href="collectie.html">Collectie</a></li><li><a href="kunst-kopen.html">Kunst te Koop</a></li><li><a href="galeriewinkel.html">Galeriewinkel</a></li><li><a href="portretten.html">Portretten</a></li><li><a href="inlijsten.html">Inlijsten</a></li><li><a href="termijnbetaling.html">Termijnbetaling</a></li><li><a href="foudgumse-school.html">Foudgumse School</a></li><li><a href="brooklyn-gallery-award.html">Brooklyn Award</a></li><li><a href="in-memoriam.html">In Memoriam</a></li></ul></li>
+                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="exposities.html">Exposities</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li><li><a href="vechtfiets.html">Vechtfiets</a></li></ul></li>
+                <li><a href="route.html">Route &amp; Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+        </div>
+    </nav>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
+        <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="kunstenaars.html" onclick="toggleMobileMenu()">Kunstenaars</a>
+        <a href="galeriewinkel.html" onclick="toggleMobileMenu()">Galeriewinkel</a>
+        <a href="kunst-kopen.html" onclick="toggleMobileMenu()">Kunst te Koop</a>
+        <a href="route.html" onclick="toggleMobileMenu()">Contact</a>
+    </div>
+
+    <div class="page-header">
+        <span class="label">Galerie Peter Leen</span>
+        <h1>Kunst Cadeau</h1>
+        <div style="width:60px;height:2px;background:var(--gold);margin:1rem auto;"></div>
+        <p class="desc">Kunst cadeau &mdash; heel fijn om te krijgen, leuk om te geven.</p>
+    </div>
+
+    <section>
+        <div class="section-inner">
+            <div class="products-grid fade-in">
+
+                <div class="product-card">
+                    <span class="cat">Zeefdruk &bull; Actie</span>
+                    <h3>Patty Harpenau &mdash; Zeefdruk</h3>
+                    <p>24-kleurenzeefdruk door Patty Harpenau, professioneel kunstenaar. Editie van 150. Opbrengst steunt Stichting &lsquo;Swim to Fight Cancer&rsquo;.</p>
+                    <div class="product-price"><span class="old">&euro; 450</span>&euro; 200</div>
+                    <p style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-muted);">Ingelijst: &euro; 350 (normaal &euro; 380)</p>
+                </div>
+
+                <div class="product-card">
+                    <span class="cat">Sculptuur</span>
+                    <h3>Margriet Barends &mdash; &lsquo;Vrije vogels&rsquo;</h3>
+                    <p>Plexiglas vogels &mdash; een sierlijk en modern cadeau voor kunst- en vogelliefhebbers.</p>
+                    <div class="product-price">&euro; 120</div>
+                </div>
+
+                <div class="product-card">
+                    <span class="cat">Tekening &bull; Gemengde techniek</span>
+                    <h3>Marjanke &mdash; &lsquo;Musjes&rsquo;</h3>
+                    <p>Inkt en gemengde techniek op karton/paneel. Handgemaakt, intiem en charmant.</p>
+                    <p style="font-size:0.82rem;color:var(--text-muted);">20 x 15 cm</p>
+                    <div class="product-price">&euro; 140</div>
+                </div>
+
+                <div class="product-card">
+                    <span class="cat">Sieraden</span>
+                    <h3>Hettie van Wijngaarden &mdash; Monumentale Kettingen</h3>
+                    <p>Kettingen ge&iuml;nspireerd op internationale klederdrachten en folklore. Met bamboekoral, Delfts-blauw, parels, edelstenen en antiek zilver en brons. Opdrachten mogelijk.</p>
+                    <div class="product-price">&euro; 300 &mdash; &euro; 1.200</div>
+                </div>
+
+                <div class="product-card">
+                    <span class="cat">Fotografie</span>
+                    <h3>Brigitte Bardot &mdash; Foto&rsquo;s op aluminium dibond</h3>
+                    <p>Zwart-wit of sepia. Klasse en tijdloze elegantie voor aan de muur.</p>
+                    <p style="font-size:0.82rem;color:var(--text-muted);">30 x 24 cm &bull; excl. 21% BTW</p>
+                    <div class="product-price">&euro; 95</div>
+                </div>
+
+            </div>
+
+            <div class="cta-block fade-in">
+                <h3>Op zoek naar een kunstcadeau?</h3>
+                <p>Kom langs in de galerie of neem contact op. Wij helpen u graag bij het vinden van het perfecte cadeau voor uzelf of een ander.</p>
+                <a href="mailto:info@galeriepeterleen.nl" class="btn btn-primary">Contact opnemen</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="footer-logo">
+            <div class="footer-links">
+                <a href="samesame.html">Home</a>
+                <a href="kunstenaars.html">Kunstenaars</a>
+                <a href="galeriewinkel.html">Galeriewinkel</a>
+                <a href="kunst-kopen.html">Kunst te Koop</a>
+                <a href="cadeaubon.html">Cadeaubon</a>
+                <a href="route.html">Contact</a>
+            </div>
+            <p>SameSame Thai Restaurant &amp; Galerie Peter Leen &bull; Herenstraat 33, Breukelen &bull; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
+        </div>
+    </footer>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+            document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('active') ? 'hidden' : '';
+        }
+        const observer = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
