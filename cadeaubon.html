@@ -195,6 +195,10 @@
         .spec-list li:last-child { border-bottom: none; }
         .spec-list li strong { color: var(--cream); min-width: 90px; }
         .spec-list li::before { content: ''; color: rgba(212,168,67,0.4); font-size: 0.8rem; flex-shrink: 0; }
+        .amounts-row { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin: 0 auto 4rem; max-width: 560px; }
+        .amount-pill { padding: 0.7rem 1.8rem; border: 1.5px solid rgba(212,168,67,0.35); border-radius: 30px; font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--gold); background: rgba(212,168,67,0.06); cursor: default; transition: all 0.25s; }
+        .amount-pill:hover { background: rgba(212,168,67,0.14); border-color: var(--gold); }
+        .amount-pill.highlight { border-color: var(--gold); background: rgba(212,168,67,0.12); }
     </style>
 </head>
 <body>
@@ -216,17 +220,23 @@
     <div class="mobile-menu" id="mobileMenu">
         <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
         <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="menu.html" onclick="toggleMobileMenu()">Menukaart</a>
         <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
         <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
         <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
         <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
-        <a href="samesame.html#kunstgalerij" onclick="toggleMobileMenu()">Galerie</a>
-        <a href="kunst-thailand.html" onclick="toggleMobileMenu()">Kunst uit Thailand</a>
+        <a href="kunstenaars.html" onclick="toggleMobileMenu()">Kunstenaars</a>
+        <a href="collectie.html" onclick="toggleMobileMenu()">Collectie</a>
+        <a href="kunst-kopen.html" onclick="toggleMobileMenu()">Kunst te Koop</a>
+        <a href="galeriewinkel.html" onclick="toggleMobileMenu()">Galeriewinkel</a>
+        <a href="portretten.html" onclick="toggleMobileMenu()">Portretten</a>
         <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
+        <a href="exposities.html" onclick="toggleMobileMenu()">Exposities</a>
         <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
         <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
         <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
         <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
+        <a href="vechtfiets.html" onclick="toggleMobileMenu()">Vechtfiets</a>
         <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Favoriete Restaurants</a>
         <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
     </div>
@@ -247,6 +257,15 @@
                 <span class="v-label">Vrij te besteden &bull; Vanaf &euro;25</span>
                 <div class="v-line"></div>
                 <p class="v-tagline">Een onvergetelijke avond vol smaak, kunst en sfeer</p>
+            </div>
+
+            <!-- Amount options -->
+            <div class="amounts-row fade-in">
+                <div class="amount-pill">&euro;25</div>
+                <div class="amount-pill highlight">&euro;50</div>
+                <div class="amount-pill">&euro;75</div>
+                <div class="amount-pill">&euro;100</div>
+                <div class="amount-pill">Eigen bedrag</div>
             </div>
 
             <!-- Section 1: What's included -->
