@@ -75,47 +75,33 @@
     </style>
 </head>
 <body>
-    <nav>
+        <nav>
         <div class="nav-inner">
             <a href="samesame.html"><img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="nav-logo"></a>
             <ul class="nav-links">
                 <li class="has-dropdown"><a href="samesame.html#about">Over Ons &#9662;</a><ul class="dropdown"><li><a href="samesame.html#about">Over Ons</a></li><li><a href="vacatures.html">Vacatures</a></li></ul></li>
                 <li class="has-dropdown"><a href="menu.html">Restaurant &#9662;</a><ul class="dropdown"><li><a href="menu.html">Menukaart</a></li><li><a href="reserveren.html">Reserveren</a></li><li><a href="arrangementen.html">Arrangementen</a></li><li><a href="cadeaubon.html">Cadeaubon</a></li></ul></li>
-                <li class="has-dropdown"><a href="kunstenaars.html">Galerie &#9662;</a><ul class="dropdown"><li><a href="kunstenaars.html">Kunstenaars</a></li><li><a href="collectie.html">Collectie</a></li><li><a href="kunst-kopen.html">Kunst te Koop</a></li><li><a href="galeriewinkel.html">Galeriewinkel</a></li><li><a href="portretten.html">Portretten</a></li><li><a href="inlijsten.html">Inlijsten</a></li><li><a href="termijnbetaling.html">Termijnbetaling</a></li><li><a href="foudgumse-school.html">Foudgumse School</a></li><li><a href="brooklyn-gallery-award.html">Brooklyn Award</a></li><li><a href="in-memoriam.html">In Memoriam</a></li></ul></li>
-                <li class="has-dropdown"><a href="meck.html">Evenementen &#9662;</a><ul class="dropdown"><li><a href="meck.html">MECK</a></li><li><a href="exposities.html">Exposities</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
-                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li><li><a href="vechtfiets.html">Vechtfiets</a></li></ul></li>
+                <li class="has-dropdown"><a href="fotos.html">Ontdek &#9662;</a><ul class="dropdown"><li><a href="blog.html">Blog</a></li><li><a href="fotos.html">Foto's</a></li><li><a href="binnenkijken.html">Binnenkijken</a></li><li><a href="ons-thailand.html">Ons Thailand</a></li><li><a href="favoriete-restaurants.html">Fav. Restaurants</a></li></ul></li>
+                <li><a href="meck.html">MECK</a></li>
                 <li><a href="route.html">Route &amp; Contact</a></li>
+                <li><a href="galerie.html" style="color:var(--gold);border:1px solid rgba(212,168,67,0.4);padding:0.3rem 0.8rem;border-radius:3px;">Galerie Peter Leen</a></li>
             </ul>
-            <button class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+            <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
     </nav>
-    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu" id="mobileMenu">
         <button class="mobile-close" onclick="toggleMobileMenu()">&times;</button>
         <a href="samesame.html" onclick="toggleMobileMenu()">Home</a>
         <a href="menu.html" onclick="toggleMobileMenu()">Menukaart</a>
         <a href="reserveren.html" onclick="toggleMobileMenu()">Reserveren</a>
         <a href="arrangementen.html" onclick="toggleMobileMenu()">Arrangementen</a>
         <a href="cadeaubon.html" onclick="toggleMobileMenu()">Cadeaubon</a>
-        <a href="vacatures.html" onclick="toggleMobileMenu()">Vacatures</a>
-        <a href="kunstenaars.html" onclick="toggleMobileMenu()">Kunstenaars</a>
-        <a href="collectie.html" onclick="toggleMobileMenu()">Collectie</a>
-        <a href="kunst-kopen.html" onclick="toggleMobileMenu()">Kunst te Koop</a>
-        <a href="galeriewinkel.html" onclick="toggleMobileMenu()">Galeriewinkel</a>
-        <a href="portretten.html" onclick="toggleMobileMenu()">Portretten</a>
-        <a href="inlijsten.html" onclick="toggleMobileMenu()">Inlijsten</a>
-        <a href="termijnbetaling.html" onclick="toggleMobileMenu()">Termijnbetaling</a>
-        <a href="foudgumse-school.html" onclick="toggleMobileMenu()">Foudgumse School</a>
-        <a href="brooklyn-gallery-award.html" onclick="toggleMobileMenu()">Brooklyn Award</a>
-        <a href="in-memoriam.html" onclick="toggleMobileMenu()">In Memoriam</a>
         <a href="meck.html" onclick="toggleMobileMenu()">MECK</a>
-        <a href="exposities.html" onclick="toggleMobileMenu()">Exposities</a>
-        <a href="favoriete-restaurants.html" onclick="toggleMobileMenu()">Fav. Restaurants</a>
         <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
         <a href="fotos.html" onclick="toggleMobileMenu()">Foto's</a>
-        <a href="binnenkijken.html" onclick="toggleMobileMenu()">Binnenkijken</a>
         <a href="ons-thailand.html" onclick="toggleMobileMenu()">Ons Thailand</a>
-        <a href="vechtfiets.html" onclick="toggleMobileMenu()">Vechtfiets</a>
         <a href="route.html" onclick="toggleMobileMenu()">Route &amp; Contact</a>
+        <a href="galerie.html" onclick="toggleMobileMenu()" style="color:var(--gold);">Galerie Peter Leen &rarr;</a>
     </div>
 
     <div class="page-header">
@@ -285,18 +271,25 @@
         </div>
     </section>
 
-    <footer>
+        <footer>
         <div class="footer-inner">
             <img src="https://www.galeriepeterleen.nl/images/LogoSameSame-transparant.png" alt="SameSame" class="footer-logo">
             <div class="footer-links">
                 <a href="samesame.html">Home</a>
-                <a href="menu.html">Menukaart</a>
                 <a href="reserveren.html">Reserveren</a>
-                <a href="kunstenaars.html">Galerie</a>
+                <a href="menu.html">Menukaart</a>
+                <a href="arrangementen.html">Arrangementen</a>
+                <a href="cadeaubon.html">Cadeaubon</a>
+                <a href="vacatures.html">Vacatures</a>
+                <a href="meck.html">MECK</a>
                 <a href="blog.html">Blog</a>
-                <a href="route.html">Contact</a>
+                <a href="fotos.html">Foto&rsquo;s</a>
+                <a href="ons-thailand.html">Ons Thailand</a>
+                <a href="favoriete-restaurants.html">Favoriete Restaurants</a>
+                <a href="route.html">Route &amp; Contact</a>
+                <a href="galerie.html" style="color:var(--gold);">Galerie Peter Leen &rarr;</a>
             </div>
-            <p>SameSame Thai Restaurant &amp; Galerie Peter Leen &bull; Herenstraat 33, Breukelen &bull; <a href="tel:+310346251216">0346 25 12 16</a></p>
+            <p>Herenstraat 25, 3621 AP Breukelen &bull; <a href="tel:+31346251216">0346 25 12 16</a> &bull; <a href="mailto:info@galeriepeterleen.nl">info@galeriepeterleen.nl</a></p>
         </div>
     </footer>
     <script>
