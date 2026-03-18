@@ -135,7 +135,7 @@
             transform: translateX(-50%) rotate(45deg);
         }
 
-        .has-dropdown:hover .dropdown { display: block; }
+        .has-dropdown.open .dropdown { display: block; }
 
         .dropdown li a {
             display: block;
@@ -2292,6 +2292,34 @@
                 });
             }
         }
+
+        // Dropdown click-to-open
+        document.querySelectorAll('.has-dropdown > a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const li = this.parentElement;
+                const isOpen = li.classList.contains('open');
+                // Close all others
+                document.querySelectorAll('.has-dropdown.open').forEach(el => el.classList.remove('open'));
+                if (!isOpen) {
+                    e.preventDefault();
+                    li.classList.add('open');
+                }
+            });
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.has-dropdown')) {
+                document.querySelectorAll('.has-dropdown.open').forEach(el => el.classList.remove('open'));
+            }
+        });
+
+        // Close dropdown on Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.has-dropdown.open').forEach(el => el.classList.remove('open'));
+            }
+        });
     </script>
 </body>
 </html>
